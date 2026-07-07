@@ -1722,13 +1722,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ── FORM ──
   const WEBHOOK_URL  = 'https://ecomidia-n8n.misrsj.easypanel.host/webhook/p4-consultoria';
-  const WEBHOOK_URL2 = 'https://n8n.srv1095468.hstgr.cloud/webhook/lead-ADS';
+  const WEBHOOK_URL2 = '/api/lead-proxy.php';
   // ATENÇÃO: este secret fica embutido no JS público — não é autenticação real,
   // apenas eleva a régua contra abuso casual (quem inspecionar o código-fonte
   // consegue ler o valor, assim como lia a própria URL do webhook antes desta
   // correção). Para controle de acesso de verdade seria preciso um proxy
   // server-side guardando o secret fora do cliente. — taynara.souza
-  const WEBHOOK_SECRET = '923213048fc48f75af88cacbc4c20ee7392c99a83a398632'; // header auth do webhook n8n (lead-ADS)
+  // secret do webhook movido para api/config.php (server-side) — padronizacao P4
 
   function maskPhone(input) {
     // Remove tudo que não é dígito e descarta o "55" do prefixo que adicionamos
@@ -1809,7 +1809,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       viewport: window.innerWidth + 'x' + window.innerHeight,
     });
     if (WEBHOOK_URL)  fetch(WEBHOOK_URL,  { method: 'POST', headers: {'Content-Type':'application/json'}, body: bodyNew,  keepalive: true }).catch(function() {});
-    if (WEBHOOK_URL2) fetch(WEBHOOK_URL2, { method: 'POST', headers: {'Content-Type':'application/json', 'x-p4-webhook-secret': WEBHOOK_SECRET}, body: bodyOld, keepalive: true }).catch(function() {});
+    if (WEBHOOK_URL2) fetch(WEBHOOK_URL2, { method: 'POST', headers: {'Content-Type':'application/json'}, body: bodyOld, keepalive: true }).catch(function() {});
     document.getElementById('formState').style.display = 'none';
     const s = document.getElementById('successState'); s.style.display = 'block'; s.focus();
     try { localStorage.setItem('p4_lead_nome', payload.nome || ''); } catch(e) {}
