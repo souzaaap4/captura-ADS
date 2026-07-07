@@ -17,3 +17,8 @@ Thumbs.db
 # Logs & temp
 *.log
 *.tmp
+
+# Segurança e artefatos (padronização P4 2026-07)
+api/config.php
+api/.rate-limit/
+node_modules/
